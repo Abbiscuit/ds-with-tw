@@ -1,19 +1,28 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
+
 import { Header } from '../components/common';
 import { Box, Card, Flex } from '../components/ui';
 
-type Props = {};
-const HomePage: NextPage = (props: Props): JSX.Element => {
+const HomePage: NextPage = (): JSX.Element => {
   return (
     <main>
       <Header />
+
       <Box>
-        <Card>
-          <h3 className="text-2xl">Card Title</h3>
-          <p>subTitle is here</p>
-          <button className="px-4 py-2 bg-black text-white">Button</button>
-        </Card>
+        <Flex className="flex-col gap-y-2 px-4">
+          <h2 className="text-2xl font-semibold">Section Title</h2>
+          <Card>
+            <Flex className="flex-col">
+              <h3 className="text-2xl">Card Title</h3>
+              <p className="text-neutral-500">みんなのカードです</p>
+            </Flex>
+            <Box className="mt-4">
+              <p>subTitle is here</p>
+              <button className="px-4 py-2 bg-black text-white">Button</button>
+            </Box>
+          </Card>
+        </Flex>
 
         <Card className="w-80">
           <Image
