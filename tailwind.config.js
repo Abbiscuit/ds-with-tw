@@ -5,7 +5,14 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['Inter', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      colors: {},
+    },
   },
-  plugins: [],
+
+  plugins: [require('@tailwindcss/typography')],
 };

@@ -1,89 +1,108 @@
 import { NextPage } from 'next';
-import { ReactNode } from 'react';
-import cn from 'classnames';
+import { ComponentPropsWithoutRef, ReactNode } from 'react';
 
-type SizingProps = '1' | '2' | '3' | '4' | '5' | 'md' | 'lg' | 'xl';
-type FlexProps = {
-  readonly children: ReactNode;
-  readonly spacing?: SizingProps;
-};
-const mapSpacing = (spacing: SizingProps) => {
-  switch (spacing) {
-    case '1':
-      return 'gap-x-1';
-    case '2':
-      return 'gap-x-2';
-    case '3':
-      return 'gap-x-3';
-    case '4':
-      return 'gap-x-4';
-    case '5':
-      return 'gap-x-5';
-    case 'md':
-      return 'gap-x-10';
-    case 'lg':
-      return 'gap-x-20';
-    case 'xl':
-      return 'gap-x-80';
-    default:
-      return 'gap-x-1';
-  }
+const Spacer = (): JSX.Element => {
+  return <div aria-hidden="true" className="flex-1 place-self-stretch"></div>;
 };
 
-const Flex = (props: FlexProps & { dir: 'row' | 'col' }) => {
-  const { spacing = '1', children, dir } = props;
+const WaveDecoration = ({
+  children,
+  color,
+  ...rest
+}: {
+  children: ReactNode;
+  color?: 'yellow' | 'blue';
+} & ComponentPropsWithoutRef<'span'>) => {
   return (
-    <div
-      className={cn(
-        'flex w-full',
-        mapSpacing(spacing),
-        dir === 'col' ? 'flex-col' : 'flex-row items-center'
-      )}
+    <span
+      className={`underline decoration-wavy decoration-2 underline-offset-4 ${
+        color === 'yellow'
+          ? 'decoration-yellow-500'
+          : color === 'blue'
+          ? 'decoration-blue-500'
+          : 'decoration-black'
+      }`}
+      {...rest}
     >
       {children}
+    </span>
+  );
+};
+
+const HeaderPanel = ({
+  title,
+  description,
+}: {
+  title: string | JSX.Element;
+  description: string | JSX.Element;
+}) => {
+  return (
+    <div className="border-b bg-white px-10 py-10">
+      <div className="container mx-auto">
+        <div className="space-y-4">
+          <h1 className="font-display text-6xl font-semibold">{title}</h1>
+          <p className="font-body text-black/90">{description}</p>
+        </div>
+      </div>
     </div>
   );
 };
 
-const Spacer = () => {
-  return <div aria-hidden="true" className="flex-1 place-self-stretch"></div>;
-};
-
-const Home: NextPage = () => {
+const Home: NextPage = (): JSX.Element => {
   return (
     <div>
-      <section className="px-10 py-10 bg-gray-100">
-        <Flex dir="row">
-          <button className="bg-cyan-500 block hover:transform hover:-translate-y-1 transition-transform duration-200 shadow-cyan-500/75 shadow-lg text-white px-4 py-2 rounded">
-            Subscribe
-          </button>
-          <Spacer />
-          <p>こんにちは</p>
-        </Flex>
-        <Flex dir="row">
-          <button className="bg-cyan-500 block hover:transform hover:-translate-y-1 transition-transform duration-200 shadow-cyan-500/75 shadow-lg text-white px-4 py-2 rounded">
-            Subscribe
-          </button>
-          <Spacer />
-          <button className="bg-pink-500 block hover:transform hover:-translate-y-1 transition-transform duration-200 shadow-pink-500/75 shadow-lg text-white px-4 py-2 rounded">
-            Subscribe
-          </button>
-          <Spacer />
-          <button className="bg-pink-500 block hover:transform hover:-translate-y-1 transition-transform duration-200 shadow-pink-500/75 shadow-lg text-white px-4 py-2 rounded">
-            Subscribe
-          </button>
-        </Flex>
-      </section>
+      <main>
+        <HeaderPanel
+          title="Hello, I am Hiro"
+          description={
+            <>
+              I love <WaveDecoration color="yellow">JavaScript</WaveDecoration>{' '}
+              and <WaveDecoration color="blue">CSS</WaveDecoration> for
+              developing beautiful UI.
+            </>
+          }
+        />
 
-      <section className="px-10 py-10">
-        <div className="container mx-auto bg-gray-100">
-          <article className="border border-black px-4 py-4 rounded">
-            <button className="bg-cyan-500 shadow-cyan-500/75 shadow-lg text-white px-4 py-2 rounded">
-              Subscribe
-            </button>
-          </article>
-        </div>
-      </section>
+        <section className="bg-zinc-900 p-10">
+          <div className="container mx-auto">
+            <div className="flex gap-x-10">
+              <div className="w-[300px] shrink-0">
+                <iframe
+                  className="aspect-video w-full"
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="prose font-body text-white/80">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Iure, dolorum, quasi, aperiam repudiandae explicabo aut saepe
+                  dolores veniam sit consectetur placeat voluptas aliquam
+                  deleniti ipsa incidunt. Natus odit omnis consectetur.
+                </p>
+                <p>
+                  目的を明確にする
+                  プロトタイピングはあくまで検証のために作るものです。プロジェクトを次のステップに進めるためには何を知る必要があるのか、そのためにプロトタイプを用いて何が知りたいのか、こうしたことが曖昧なままではプロトタイピングを実施する意味は薄れるでしょう。前提となる検証目的を明確にし、チーム内でもその意識を共有することが大切です。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white p-10">
+          <div className="container mx-auto">
+            <iframe
+              className="aspect-video w-full"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
